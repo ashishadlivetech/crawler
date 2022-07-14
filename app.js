@@ -16,7 +16,7 @@ const options = {
     headers: {},
     maxDepth: 3,
     maxUrls: 10,
-    maxWait: 90000,
+    maxWait: 80000, 
     recursive: true,
     probe: true,
     proxy: false,
