@@ -9,7 +9,6 @@ var crash= false;
 var results;
 require('dotenv').config();
 const port = process.env.PORT;
-console.log(`Your port is ${port}`);
 
 const options = {
     debug: false,
@@ -58,7 +57,7 @@ const reqFilter = (req,res,next)=>{
             console.log(error);
         }
       await wappalyzer.destroy();
-       if(results.technologies){
+       if((results) && (results.technologies)){
               for(p=0; p < results.technologies.length; p++){
                 if(results.technologies[p].slug == 'woocommerce'){ 
                   crash = true;
@@ -126,7 +125,7 @@ const fetchShelve = async () => {
 };
 app.use(reqFilter);
 app.listen(port, () => {
-  console.log("Application started and Listening on port"+port);
+  console.log("Application started and Listening on port"+ port);
 });
 
 
