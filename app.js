@@ -7,6 +7,9 @@ const cheerio = require("cheerio");
 var url = '';
 var crash= false;
 var results;
+require('dotenv').config();
+const port = process.env.PORT;
+console.log(`Your port is ${port}`);
 
 const options = {
     debug: false,
@@ -122,8 +125,8 @@ const fetchShelve = async () => {
     }
 };
 app.use(reqFilter);
-app.listen(3000, () => {
-  console.log("Application started and Listening on port 3000");
+app.listen(port, () => {
+  console.log("Application started and Listening on port"+port);
 });
 
 
