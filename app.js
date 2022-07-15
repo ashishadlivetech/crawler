@@ -77,11 +77,11 @@ app.post("/", (req, res) => {
   rp(url)
   .then(function(html){ 
     if(html.includes('wp-admin')){
-      res.send('Provided Url related with Wordpress Please  <a href="woocommerce">click here</a> for check Woocommerce');
+      res.send('<h2>Provided Url related with Wordpress Please  <a href="woocommerce">click here</a> for check Woocommerce</h2>');
     }
   })
   .catch(function(err){
-    res.send('Your Url not related with Wordpress Please  <a href="/">click here</a>');
+    res.send('<h2>Your Url not related with Wordpress Please  <a href="/">click here</a></h2>');
   });
 });
 
@@ -89,11 +89,11 @@ app.get("/woocommerce", (req, res) => {
   rp(url)
   .then(function(html){ 
     if(html.includes('woocommerce')){
-      res.send('Provided Url related with Woocommerce Please check here for get all data <a href="details">first here</a>');
+      res.send('<h2>Provided Url related with Woocommerce Please check here for get all data <a href="details">first here</a></h2>');
     }
   })
   .catch(function(err){
-    res.send('Your Url not related with woocommerce Please click here <a href="/">first here</a>');
+    res.send('<h2>Your Url not related with woocommerce Please click here <a href="/">first here</a></h2>');
   });
 });
 
