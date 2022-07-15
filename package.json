@@ -19,6 +19,9 @@
     "express": "^4.18.1",
     "nodemon": "^2.0.19",
     "product-scraper": "^0.1.1",
+    "puppeteer": "^15.4.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6",
     "wappalyzer": "^6.10.37"
   }
 }
