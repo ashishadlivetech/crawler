@@ -80,6 +80,8 @@ const fetchShelve = async () => {
 };
 
 app.listen(port, () => {
+  localStorage.removeItem('pagination');
+  localStorage.removeItem('pageCheck');
   console.log("Application started and Listening on port"+ port);
 });
 
@@ -102,7 +104,7 @@ app.post("/", (req, res) => {
   .catch(function(err){
     localStorage.removeItem('pagination');
     localStorage.removeItem('pageCheck');
-    
+
     res.send('<h2>Your Url not related with Wordpress Please  <a href="/">click here</a></h2>');
   });
 });
