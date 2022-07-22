@@ -102,6 +102,7 @@ app.post("/", (req, res) => {
   .catch(function(err){
     localStorage.removeItem('pagination');
     localStorage.removeItem('pageCheck');
+    
     res.send('<h2>Your Url not related with Wordpress Please  <a href="/">click here</a></h2>');
   });
 });
