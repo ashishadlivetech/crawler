@@ -5,9 +5,15 @@ const rp = require('request-promise');
 const axios = require("axios");
 const cheerio = require("cheerio");
 var url = '';
+var pagination =[];
+var pageCheck =false;
+
+var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage('./scratch');
+
 require('dotenv').config();
 const port = process.env.PORT;
-
+app.set('view engine', 'ejs');
 
 app.use(express.static(__dirname));
 
@@ -23,7 +29,17 @@ const fetchShelve = async () => {
         const $ = cheerio.load(html);
 
         const shelves = [];
-
+        if(!pageCheck){ 
+        $('nav.woocommerce-pagination li a').each((ind,ancr) =>{
+          var det = $(ancr);
+          if(!pagination.includes(det.attr('href'))){
+              pagination.push(det.attr('href'));
+              pageCheck = true;
+              localStorage.setItem('pagination', JSON.stringify(pagination));
+              localStorage.setItem('pageCheck', JSON.stringify(pageCheck));
+          }
+        });
+      }
             $('.product.type-product').each((_idx, el) => {
             const shelf = $(el);
             const image = shelf.find('img').attr('src');
@@ -57,7 +73,6 @@ const fetchShelve = async () => {
             
                 shelves.push(element)
         });
-
         return shelves;
     } catch (error) {
         throw error;
@@ -69,6 +84,8 @@ app.listen(port, () => {
 });
 
 app.get("/", (req, res) => {
+    localStorage.removeItem('pagination');
+    localStorage.removeItem('pageCheck');
   res.sendFile(__dirname + "/index.html");
 });
 
@@ -89,7 +106,7 @@ app.get("/woocommerce", (req, res) => {
   rp(url)
   .then(function(html){ 
     if(html.includes('woocommerce')){
-      res.send('<h2>Provided Url related with Woocommerce Please check here for get all data <a href="details">first here</a></h2>');
+      res.send('<h2>Provided Url related with Woocommerce Please check here for get all data <a href="details">click here</a></h2>');
     }
   })
   .catch(function(err){
@@ -101,9 +118,22 @@ app.get("/details", (req, res) => {
   if(!url){
     res.send('Please provide url <a href="/">first here</a>');
   }else{
-    fetchShelve().then((shelves) => res.send(shelves));
+    fetchShelve().then((shelves) => {
+      res.render('next',{shelves,pagination});
+  }); 
   }
-  
+});
+
+app.get("/paginate/:urlindex", (req, res) => {
+  var urlindex = req.params.urlindex;
+  pagination = JSON.parse(localStorage.getItem('pagination'));
+  url = pagination[urlindex];
+  var pageCheck = JSON.parse(localStorage.getItem('pageCheck'));
+fetchShelve().then((shelves) => {
+// if(pagination.length>0){
+  res.render('next',{shelves,pagination});res.end();
+// }
+});
 });
 
 
