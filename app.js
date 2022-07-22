@@ -94,10 +94,14 @@ app.post("/", (req, res) => {
   rp(url)
   .then(function(html){ 
     if(html.includes('wp-admin')){
+      localStorage.removeItem('pagination');
+    localStorage.removeItem('pageCheck');
       res.send('<h2>Provided Url related with Wordpress Please  <a href="woocommerce">click here</a> for check Woocommerce</h2>');
     }
   })
   .catch(function(err){
+    localStorage.removeItem('pagination');
+    localStorage.removeItem('pageCheck');
     res.send('<h2>Your Url not related with Wordpress Please  <a href="/">click here</a></h2>');
   });
 });
